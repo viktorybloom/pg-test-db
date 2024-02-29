@@ -7,19 +7,11 @@ import pandas as pd
 from sqlalchemy import create_engine
 
 def main(params):
-    user = os.environ.get('USER')
-    password = os.environ.get('PASSWORD')
-    host = os.environ.get('HOST')
-    port = os.environ.get('PORT')
-    db = os.environ.get('DB')
-
     # List of CSV files to be ingested
     csv_files = [
         "exam/data_analyst_test.csv",
         "exam/data_analyst_test_usage.csv"
     ]
-
-    engine = create_engine(f'postgresql://{user}:{password}@{host}:{port}/{db}')
 
     for csv_file in csv_files:
         csv_name = csv_file.split("/")[-1]
@@ -35,12 +27,12 @@ def main(params):
             column_types = {
                 'CUSTOMER_ID': 'VARCHAR(255)',
                 'BILLING_ORG': 'VARCHAR(255)',
-                'STATE': 'VARCHAR(10)',
+                'STATE': 'VARCHAR(25)',
                 'SALES_DATE': 'DATE',
                 'COOL_OFF_END_DATE': 'DATE',
                 'FRMP_END_DATE': 'DATE',
-                'ACCOUNT_STATUS': 'VARCHAR(20)',
-                'CURRENT_METER_TYPE': 'VARCHAR(20)',
+                'ACCOUNT_STATUS': 'VARCHAR(255)',
+                'CURRENT_METER_TYPE': 'VARCHAR(255)',
             }
         elif table_name == "data_analyst_test_usage":
             column_types = {
@@ -52,6 +44,8 @@ def main(params):
 
         # Convert data types before writing to SQL
         df = df.astype(column_types)
+
+        engine = create_engine(f'postgresql://{user}:{password}@{host}:{port}/{db}')
 
         # Write to SQL with specified data types
         df.to_sql(name=table_name, con=engine, if_exists='replace', index=False, dtype=column_types)

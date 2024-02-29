@@ -4,7 +4,7 @@ services:
     environment:
       - POSTGRES_USER=root
       - POSTGRES_PASSWORD=root
-      - POSTGRES_DB=data_test
+      - POSTGRES_DB=data-test
     volumes:
       - "./data:/var/lib/postgresql/data:rw"
     ports:
@@ -16,21 +16,4 @@ services:
       - PGADMIN_DEFAULT_PASSWORD=root
     ports:
       - "8080:80"
-    
-  data-ingest:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    depends_on:
-      - pgdatabase
-    environment:
-      - POSTGRES_USER=root
-      - POSTGRES_PASSWORD=root
-      - POSTGRES_HOST=pgdatabase
-      - POSTGRES_PORT=5432
-      - POSTGRES_DB=data_test
-      - USER=root
-      - PASSWORD=root
-      - HOST=pgdatabase
-      - PORT=5432
-      - DB=data_test
+   
