@@ -17,7 +17,7 @@ services:
     ports:
       - "8080:80"
     
-  data_ingest:
+  data-ingest:
     build:
       context: .
       dockerfile: Dockerfile
