@@ -29,3 +29,8 @@ services:
       - POSTGRES_HOST=pgdatabase
       - POSTGRES_PORT=5432
       - POSTGRES_DB=data_test
+      - USER=root
+      - PASSWORD=root
+      - HOST=pgdatabase
+      - PORT=5432
+      - DB=data_test

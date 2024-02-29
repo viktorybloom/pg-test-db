@@ -7,11 +7,11 @@ import pandas as pd
 from sqlalchemy import create_engine
 
 def main(params):
-    user = params.user
-    password = params.password
-    host = params.host
-    port = params.port
-    db = params.db
+    user = os.environ.get('USER')
+    password = os.environ.get('PASSWORD')
+    host = os.environ.get('HOST')
+    port = os.environ.get('PORT')
+    db = os.environ.get('DB')
 
     # List of CSV files to be ingested
     csv_files = [
@@ -30,7 +30,7 @@ def main(params):
         # Assuming the table name is the same as the CSV file name (without extension)
         table_name = csv_name.split(".")[0]
 
-        # Define column data types
+        # Define column data types 
         if table_name == "data_analyst_test":
             column_types = {
                 'CUSTOMER_ID': 'VARCHAR(255)',
@@ -70,3 +70,4 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     main(args)
+
